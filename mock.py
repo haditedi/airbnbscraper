@@ -15,10 +15,10 @@ url_skyline="https://www.airbnb.co.uk/rooms/893933063998940096?source_impression
 url_nineelms="https://www.airbnb.co.uk/rooms/991985177917763716?source_impression_id=p3_1704451278_Eah3CTzOxqWaHULc&check_in="
 url_sky10="https://www.airbnb.co.uk/rooms/1046907771076731775?source_impression_id=p3_1704451469_3qliydVyTnmWa7FH&check_in="
 
-def getRates(property_name,url_param,arrivalDate,departureDate, num_days, driver):
+def getRates(property_name,url_param,arrivalDate,departureDate, min_nights, num_days, driver):
     skyline_x=[]
     skyline_y=[]
-    min_nights=3
+    
     for x in range(int(num_days)):
         # print("ARRIVAL DATE", arrivalDate)
 
@@ -26,7 +26,7 @@ def getRates(property_name,url_param,arrivalDate,departureDate, num_days, driver
             url=f"{url_param}{arrivalDate}&guests=4&adults=4&check_out={departureDate}"
             driver.get(url)
             # print("SKYLINE 2 BED 2 BATH")
-            print("URL", url)
+            # print("URL", url)
             sleep(3)
             try:
                 element = WebDriverWait(driver, 10).until(
@@ -35,8 +35,11 @@ def getRates(property_name,url_param,arrivalDate,departureDate, num_days, driver
                 element.click()
                 sleep(3)
             except:
-                print("not click")
+                pass
+                # print("")
+            sleep(3)
             total_price = driver.find_element(By.XPATH, "/html/body/div[5]/div/div/div[1]/div/div[2]/div/div/div/div[1]/main/div/div[1]/div[3]/div/div[2]/div/div/div[1]/div/div/div/div/div/div/div/div[3]/div/section/div[2]/div/span[2]/span[1]/span")
+            # total_price = driver.find_element(By.XPATH, "/html/body/div[5]/div/div/div[1]/div/div[2]/div/div/div/div[1]/main/div/div[1]/div[3]/div/div[2]/div/div/div[1]/div/div/div/div/div/div/div/div[3]/div/section/div[2]/div/span[2]/span[1]/span
             total_price = total_price.text.replace("£","")
             price_per_night=0
             if len(total_price) >3:
@@ -44,33 +47,32 @@ def getRates(property_name,url_param,arrivalDate,departureDate, num_days, driver
             else:
                 price_per_night = int(total_price)/min_nights
             price_per_night = int(price_per_night)
-            print("Rate/night £",price_per_night)
+            # print("Rate/night £",price_per_night)
             skyline_y.append(price_per_night)
             
-        except:
-            print("Not available")
+        except Exception as e:
+            print(e)
             skyline_y.append(None)
         finally:
-            xtick_label = arrivalDate
-            skyline_x.append(xtick_label)
-            result = addOneDay(arrivalDate)
+            # print("Arrival", arrivalDate)
+            skyline_x.append(arrivalDate)
+            result = addOneDay(arrivalDate, min_nights)
             arrivalDate = result["arrivalDate"]
             departureDate = result["departureDate"]
+            # print("DEPARTURE",departureDate)
 
     print(property_name,skyline_x, skyline_y)
-    return skyline_x, skyline_y
-
-
-   
+    return skyline_x, skyline_y   
 
 def getFrank():
-    min_nights=3 
+    min_nights=4 
     arrivalDate = input("date (dd-mm-yyyy) : ")
     num_days = input("Number of days : ")
     arrivalDate = datetime.strptime(arrivalDate,"%d-%m-%Y")
     nights = timedelta(days=min_nights)
     departureDate = arrivalDate+nights
     departureDate = departureDate.strftime("%Y-%m-%d")
+    
     arrivalDate = arrivalDate.strftime("%Y-%m-%d")
 
     options = Options()
@@ -79,44 +81,30 @@ def getFrank():
     driver = webdriver.Chrome(options=options)
     
     plt.rcParams['figure.figsize'] = [12, 7]
-    # a=date.fromisoformat("2024-01-20")
-    # b=date.fromisoformat("2024-01-21")
-    # print(a)
-    # print(type(a))
-    # x=[a,b]
-    # y=[150,200]
-    # plt.plot_date(x,y, "g",marker="o", label="Skyline")
-    # x=['2024-01-20', '2024-01-21', '2024-01-22', '2024-01-23', '2024-01-24', '2024-01-25', '2024-01-26', '2024-01-27', '2024-01-28', '2024-01-29'] 
-    # y= [150, 200, None, None, None, None, None, None, None, 300]
     
-    # x, y = getRates("skyline",url_skyline,arrivalDate, departureDate,num_days, driver)
-    # x = [ date.fromisoformat(i) for i in x]
-    # x=np.array(x)
-    # print(x)
-    # y = np.array(y).astype(np.double)
-    # sky_mask = np.isfinite(y)
-    # plt.plot_date(x[sky_mask],y[sky_mask], "g",marker="o", label="Skyline")
- 
-   
+    x, y = getRates("skyline",url_skyline,arrivalDate, departureDate,num_days, driver)
+    x = [ date.fromisoformat(i) for i in x]
+    x=np.array(x)
+    print(x)
+    y = np.array(y).astype(np.double)
+    sky_mask = np.isfinite(y)
+    plt.plot_date(x[sky_mask],y[sky_mask], "g",marker="o", label="Skyline")
+
+    sky10_x, sky10_y = getRates("Sky10", url_sky10, arrivalDate, departureDate,min_nights,num_days,driver)
+    sky10_y = np.array(sky10_y).astype(np.double)
+    sky10_x = np.array(sky10_x)
+    sky10_mask=np.isfinite(sky10_y)
+    plt.plot_date(x[sky10_mask],sky10_y[sky10_mask],"r", marker="o", label="Sky10")
     
     nine_x, nine_y = getRates("NineElm",url_nineelms,arrivalDate, departureDate,num_days,driver)
     nine_y = np.array(nine_y).astype(np.double)
     nine_mask=np.isfinite(nine_y)
     plt.plot_date(x[nine_mask],nine_y[nine_mask],"b", marker="o", label="Nine Elm")
 
-   
-    
-    # relocate_x, relocate_y = getRates("Relocate", url_relocate,arrivalDate, departureDate,num_days,driver)
-    # relocate_y = np.array(relocate_y).astype(np.double)
-    # relocate_mask=np.isfinite(relocate_y)
-    # plt.plot_date(x[relocate_mask],relocate_y[relocate_mask], "y", marker="o", label="Relocate")
-    
-   
-    
-    # sky10_x, sky10_y = getRates("Sky10", url_sky10, arrivalDate, departureDate,num_days,driver)
-    # sky10_y = np.array(sky10_y).astype(np.double)
-    # sky10_mask=np.isfinite(sky10_y)
-    # plt.plot_date(x[sky10_mask],sky10_y[sky10_mask],"r", marker="o", label="Sky10")
+    relocate_x, relocate_y = getRates("Relocate", url_relocate,arrivalDate, departureDate,num_days,driver)
+    relocate_y = np.array(relocate_y).astype(np.double)
+    relocate_mask=np.isfinite(relocate_y)
+    plt.plot_date(x[relocate_mask],relocate_y[relocate_mask], "y", marker="o", label="Relocate")
     
     plt.legend()
     plt.xlabel("DATE")
