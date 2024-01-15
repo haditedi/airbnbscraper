@@ -10,10 +10,17 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import numpy as np
 
+#SKY
 url_relocate="https://www.airbnb.co.uk/rooms/871040174926257448?source_impression_id=p3_1704450998_hM8uppOkkjhY8NdK&check_in="
 url_skyline="https://www.airbnb.co.uk/rooms/893933063998940096?source_impression_id=p3_1704361618_0j1jiCryQcZYdVPl&check_in="
 url_nineelms="https://www.airbnb.co.uk/rooms/991985177917763716?source_impression_id=p3_1704451278_Eah3CTzOxqWaHULc&check_in="
 url_sky10="https://www.airbnb.co.uk/rooms/1046907771076731775?source_impression_id=p3_1704451469_3qliydVyTnmWa7FH&check_in="
+
+#HUNTER
+url_charm="https://www.airbnb.co.uk/rooms/919494818502148128?source_impression_id=p3_1705312955_Qq3gYbrhzJIcQ90A&check_in="
+url_vintage="https://www.airbnb.co.uk/rooms/901306741280213973?source_impression_id=p3_1705312818_1cWKDpsOurb3ssZD&check_in="
+url_hunter="https://www.airbnb.co.uk/rooms/903131518446432064?source_impression_id=p3_1705311821_p9worQnaTtWB52AA&check_in="
+url_ours="https://www.airbnb.co.uk/rooms/991919969842748351?source_impression_id=p3_1705313120_c%2Fm2yGmapv9ksHVg&check_in="
 
 def getRates(property_name,url_param,arrivalDate,departureDate, min_nights, num_days, driver):
     skyline_x=[]
@@ -64,10 +71,10 @@ def getRates(property_name,url_param,arrivalDate,departureDate, min_nights, num_
     print(property_name,skyline_x, skyline_y)
     return skyline_x, skyline_y   
 
-def getFrank():
-    min_nights=4 
+def getSky():
     arrivalDate = input("date (dd-mm-yyyy) : ")
     num_days = input("Number of days : ")
+    min_nights=int(input("Minimum nigths : "))
     arrivalDate = datetime.strptime(arrivalDate,"%d-%m-%Y")
     nights = timedelta(days=min_nights)
     departureDate = arrivalDate+nights
@@ -85,7 +92,7 @@ def getFrank():
     x, y = getRates("skyline",url_skyline,arrivalDate, departureDate,min_nights,num_days, driver)
     x = [ date.fromisoformat(i) for i in x]
     x=np.array(x)
-    print(x)
+    # print(x)
     y = np.array(y).astype(np.double)
     sky_mask = np.isfinite(y)
     plt.plot_date(x[sky_mask],y[sky_mask], "g",marker="o", label="Skyline")
@@ -116,8 +123,62 @@ def getFrank():
     plt.gca().xaxis.set_major_formatter(myFmt)
     plt.savefig("myfigure.png")
     plt.show()
+
+def getHunter():
+    arrivalDate = input("date (dd-mm-yyyy) : ")
+    num_days = input("Number of days : ")
+    min_nights=int(input("Minimum nigths : "))
+    arrivalDate = datetime.strptime(arrivalDate,"%d-%m-%Y")
+    nights = timedelta(days=min_nights)
+    departureDate = arrivalDate+nights
+    departureDate = departureDate.strftime("%Y-%m-%d")
+    
+    arrivalDate = arrivalDate.strftime("%Y-%m-%d")
+
+    options = Options()
+    options.add_experimental_option("detach", True)
+    options.add_argument("--headless=new")
+    driver = webdriver.Chrome(options=options)
+    
+    plt.rcParams['figure.figsize'] = [12, 7]
+    
+    x, y = getRates("Charm",url_charm,arrivalDate, departureDate,min_nights,num_days, driver)
+    x = [ date.fromisoformat(i) for i in x]
+    x=np.array(x)
+    # print(x)
+    y = np.array(y).astype(np.double)
+    charm_mask = np.isfinite(y)
+    plt.plot_date(x[charm_mask],y[charm_mask], "g",marker="o", label="charm")
+
+    vintagex, vintagey = getRates("vintage", url_vintage, arrivalDate, departureDate,min_nights,num_days,driver)
+    vintagey = np.array(vintagey).astype(np.double)
+    vintagex = np.array(vintagex)
+    vintagemask=np.isfinite(vintagey)
+    plt.plot_date(x[vintagemask],vintagey[vintagemask],"r", marker="o", label="vintage")
+    
+    oursx, oursy = getRates("Ours",url_ours,arrivalDate, departureDate,min_nights,num_days,driver)
+    oursy = np.array(oursy).astype(np.double)
+    oursmask=np.isfinite(oursy)
+    plt.plot_date(x[oursmask],oursy[oursmask],"b", marker="o", label="ours")
+
+    hunterx, huntery = getRates("Relocate", url_relocate,arrivalDate, departureDate,min_nights,num_days,driver)
+    huntery = np.array(huntery).astype(np.double)
+    huntermask=np.isfinite(huntery)
+    plt.plot_date(x[huntermask],huntery[huntermask], "y", marker="o", label="hunter")
+    
+    plt.legend()
+    plt.xlabel("DATE")
+    plt.ylabel("RATE/NIGHT")
+    plt.title("RATE COMPARISON",fontweight="bold")
+    plt.ylim(100,500)
+    plt.xticks(rotation=45)  
+    myFmt = mdates.DateFormatter('%d / %m')
+    plt.gca().xaxis.set_major_formatter(myFmt)
+    plt.savefig("myfigure.png")
+    plt.show()
    
   
-getFrank()
+# getSky()
+getHunter()
 
 
