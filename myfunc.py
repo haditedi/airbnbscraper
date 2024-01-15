@@ -44,7 +44,7 @@ def getRates(property_name,url_param,arrivalDate,departureDate, min_nights, num_
             except:
                 pass
                 # print("")
-            sleep(3)
+            # sleep(3)
             total_price = driver.find_element(By.XPATH, "/html/body/div[5]/div/div/div[1]/div/div[2]/div/div/div/div[1]/main/div/div[1]/div[3]/div/div[2]/div/div/div[1]/div/div/div/div/div/div/div/div[3]/div/section/div[2]/div/span[2]/span[1]/span")
             # total_price = driver.find_element(By.XPATH, "/html/body/div[5]/div/div/div[1]/div/div[2]/div/div/div/div[1]/main/div/div[1]/div[3]/div/div[2]/div/div/div[1]/div/div/div/div/div/div/div/div[3]/div/section/div[2]/div/span[2]/span[1]/span
             total_price = total_price.text.replace("£","")
@@ -169,7 +169,7 @@ def getHunter():
     plt.legend()
     plt.xlabel("DATE")
     plt.ylabel("RATE/NIGHT")
-    plt.title("RATE COMPARISON",fontweight="bold")
+    plt.title("RATE COMPARISON - HUNTER HOUSE",fontweight="bold")
     plt.ylim(100,500)
     plt.xticks(rotation=45)  
     myFmt = mdates.DateFormatter('%d / %m')
@@ -177,8 +177,10 @@ def getHunter():
     plt.savefig("myfigure.png")
     plt.show()
    
-  
-# getSky()
-getHunter()
+choice = input("Enter 'sky' for Sky Garden or 'hunt' for Hunter House : ")
+if choice == "sky":
+    getSky()
+else:
+    getHunter()
 
 
