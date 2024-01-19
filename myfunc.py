@@ -77,9 +77,9 @@ def getSky():
     min_nights=int(input("Minimum nigths : "))
     arrivalDate = datetime.strptime(arrivalDate,"%d-%m-%Y")
     nights = timedelta(days=min_nights)
+    arrFileName=arrivalDate.strftime("%d-%m")
     departureDate = arrivalDate+nights
     departureDate = departureDate.strftime("%Y-%m-%d")
-    
     arrivalDate = arrivalDate.strftime("%Y-%m-%d")
 
     options = Options()
@@ -116,12 +116,12 @@ def getSky():
     plt.legend()
     plt.xlabel("DATE")
     plt.ylabel("RATE/NIGHT")
-    plt.title("RATE COMPARISON",fontweight="bold")
+    plt.title(f"RATE COMPARISON {choice} From {arrFileName}",fontweight="bold")
     plt.ylim(100,500)
     plt.xticks(rotation=45)  
     myFmt = mdates.DateFormatter('%d / %m')
     plt.gca().xaxis.set_major_formatter(myFmt)
-    plt.savefig("myfigure.png")
+    plt.savefig(f"{choice} {arrFileName}.png")
     plt.show()
 
 def getHunter():
@@ -130,9 +130,9 @@ def getHunter():
     min_nights=int(input("Minimum nigths : "))
     arrivalDate = datetime.strptime(arrivalDate,"%d-%m-%Y")
     nights = timedelta(days=min_nights)
+    arrFileName=arrivalDate.strftime("%d-%m")
     departureDate = arrivalDate+nights
     departureDate = departureDate.strftime("%Y-%m-%d")
-    
     arrivalDate = arrivalDate.strftime("%Y-%m-%d")
 
     options = Options()
@@ -169,18 +169,20 @@ def getHunter():
     plt.legend()
     plt.xlabel("DATE")
     plt.ylabel("RATE/NIGHT")
-    plt.title("RATE COMPARISON - HUNTER HOUSE",fontweight="bold")
+    plt.title(f"RATE COMPARISON {choice} From {arrFileName}",fontweight="bold")
     plt.ylim(100,500)
     plt.xticks(rotation=45)  
     myFmt = mdates.DateFormatter('%d / %m')
     plt.gca().xaxis.set_major_formatter(myFmt)
-    plt.savefig("myfigure.png")
+    plt.savefig(f"{choice} {arrFileName}.png")
     plt.show()
    
 choice = input("Enter 'sky' for Sky Garden or 'hunt' for Hunter House : ")
 if choice == "sky":
+    choice = "SKY GARDEN"
     getSky()
 else:
+    choice = "HUNTER HOUSE"
     getHunter()
 
 
