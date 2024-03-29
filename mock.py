@@ -22,11 +22,6 @@ hunter=[
      {"name":"Hunter","url":"https://www.airbnb.co.uk/rooms/903131518446432064?source_impression_id=p3_1705311821_p9worQnaTtWB52AA&check_in=","line_color":"b"},
      {"name":"Ours","url":"https://www.airbnb.co.uk/rooms/991919969842748351?source_impression_id=p3_1705313120_c%2Fm2yGmapv9ksHVg&check_in=","line_color":"y"}
      ]
-# url_charm=""
-# url_vintage=""
-# url_hunter=""
-# url_ours=""
-
 
 
 def getBnb(datalist):
