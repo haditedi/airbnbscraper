@@ -1,3 +1,5 @@
+import csv
+
 from datetime import datetime, timedelta, date
 from time import sleep
 
@@ -96,6 +98,23 @@ def getRates(listProperty,arrivalDate,departureDate, min_nights, num_days, drive
                 x_data=np.array(x_data)
                
                 y_data = np.array(skyline_y).astype(np.double)
+                # plt.ylim(min(y_data),500)
                 sky_mask = np.isfinite(y_data)
                 plt.plot_date(x_data[sky_mask],y_data[sky_mask], line_color,marker="o", label=property_name)
-            
+
+                fields = ["Date", "Rate/night"]
+                merged_list=[]
+                for i in range(len(skyline_x)):
+                    thelist=[]
+                    thelist.append(skyline_x[i])
+                    thelist.append(skyline_y[i])
+                    merged_list.append(thelist)
+                filename = f"csv/{property_name}.csv"
+                # writing to csv file
+                with open(filename, 'w') as csvfile:
+                    # creating a csv writer object
+                    csvwriter = csv.writer(csvfile)
+                    # writing the fields
+                    csvwriter.writerow(fields)
+                    # writing the data rows
+                    csvwriter.writerows(merged_list)
