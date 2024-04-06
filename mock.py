@@ -48,7 +48,7 @@ def getBnb(datalist):
     min_nights=int(input("Minimum nigths : "))
     arrivalDate = datetime.strptime(arrivalDate,"%d-%m-%Y")
     nights = timedelta(days=min_nights)
-    arrFileName=arrivalDate.strftime("%d-%m-%Y")
+    arrFileName=arrivalDate.strftime("%m-%d-%Y")
     departureDate = arrivalDate+nights
     departureDate = departureDate.strftime("%Y-%m-%d")
     arrivalDate = arrivalDate.strftime("%Y-%m-%d")
@@ -64,12 +64,13 @@ def getBnb(datalist):
     plt.legend()
     plt.xlabel("DATE",fontweight="bold")
     plt.ylabel("RATE/NIGHT",fontweight="bold")
-    plt.title(f"RATE COMPARISON {choice} From {arrFileName}",fontweight="bold")
+    plt.title(f"Rate Comparison {choice} From {arrFileName}",fontweight="bold")
     plt.ylim(150,600)
     plt.xticks(rotation=45)  
-    myFmt = mdates.DateFormatter('%d / %m')
+    myFmt = mdates.DateFormatter('%m / %d')
     plt.gca().xaxis.set_major_formatter(myFmt)
-    plt.savefig(f"graph/{choice} {arrFileName}.png")
+    # plt.savefig(f"graph/{choice} {arrFileName}.png")
+    plt.savefig(f"graph/test {arrFileName}.png")
     plt.show()
 
 
