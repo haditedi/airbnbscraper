@@ -30,26 +30,26 @@ prince=[
      {"name":"John","url":"https://www.airbnb.co.uk/rooms/1035252707118091218?source_impression_id=p3_1711898457_i1f8UFewhDAgVuDS&check_in=","line_color":"b"},
      {"name":"Anna","url":"https://www.airbnb.co.uk/rooms/41347455?source_impression_id=p3_1711898456_X8V6jGQbb5Mv9n4g&check_in=", "line_color": "orange"},
      {"name":"Gianni","url":"https://www.airbnb.co.uk/rooms/24349122?source_impression_id=p3_1711898457_5FlY9H4NthjB8G8M&check_in=", "line_color": "purple"},
-     {"name":"Ours","url":"https://www.airbnb.co.uk/rooms/1110055308129837928?source_impression_id=p3_1711899452_VLF2b6atGPBzhTWn&check_in=","line_color":"y"},
+     {"name":"Princes Sq","url":"https://www.airbnb.co.uk/rooms/1110055308129837928?source_impression_id=p3_1711899452_VLF2b6atGPBzhTWn&check_in=","line_color":"y"},
 ]
 
 
 def getBnb(datalist):
-   
+    graph_name=datalist.capitalize()
     if datalist == "sky":
         datalist = sky
-    # elif datalist == "prince":
-    #     datalist = prince
-    # else:
-    #     datalist = hunter
+    elif datalist == "prince":
+        datalist = prince
+    else:
+        datalist = hunter
     # datalist = sky
     # print("DATALIST", datalist)
-    # arrivalDate = input("date (dd-mm-yyyy) : ")
-    arrivalDate = "12-05-2024"
-    # num_days = input("Number of days : ")
-    num_days = 4
-    # min_nights=int(input("Minimum nigths : "))
-    min_nights = 4
+    arrivalDate = input("date (dd-mm-yyyy) : ")
+    # arrivalDate = "12-05-2024"
+    num_days = input("Number of days : ")
+    # num_days = 4
+    min_nights=int(input("Minimum nigths : "))
+    # min_nights = 4
     arrivalDate = datetime.strptime(arrivalDate,"%d-%m-%Y")
     nights = timedelta(days=min_nights)
     arrFileName=arrivalDate.strftime("%m-%d-%Y")
@@ -68,17 +68,18 @@ def getBnb(datalist):
     plt.legend()
     plt.xlabel("DATE",fontweight="bold")
     plt.ylabel("RATE/NIGHT",fontweight="bold")
-    plt.title(f"Rate Comparison {datalist} From {arrFileName}",fontweight="bold")
-    plt.ylim(150,600)
+    plt.title(f"Rate Comparison {graph_name} From {arrFileName}",fontweight="bold")
+    plt.ylim(150,650)
     plt.xticks(rotation=45)  
     myFmt = mdates.DateFormatter('%m / %d')
     plt.gca().xaxis.set_major_formatter(myFmt)
-    plt.savefig(f"graph/{datalist} {arrFileName}.png")
+    file_time= datetime.now().strftime("%H-%M-%S")
+    plt.savefig(f"graph/{graph_name} {arrFileName} {file_time}.png")
     plt.show()
 
 
-# choice = input("Enter 'sky' for Sky Garden or 'hunt' for Hunter House or 'prince' : ")
-# getBnb(choice)
+choice = input("Enter 'sky' for Sky Garden or 'hunt' for Hunter House or 'prince' : ")
+getBnb(choice)
 
 
 
