@@ -13,19 +13,18 @@ sky=[
      {"name":"Skyline","url":"https://www.airbnb.co.uk/rooms/893933063998940096?source_impression_id=p3_1704361618_0j1jiCryQcZYdVPl&check_in=","line_color":"g"},
      {"name":"Bloomson","url":"https://www.airbnb.co.uk/rooms/1077423177222957828?source_impression_id=p3_1712150698_B9d6DRwQYwiSlIGc&check_in=","line_color":"b"},
      {"name":"Tracy","url":"https://www.airbnb.co.uk/rooms/1002010727603598593?source_impression_id=p3_1712153527_mBbNtthTyJ1n0cuu&check_in=", "line_color": "orange"},
-     {"name":"Ours","url":"https://www.airbnb.co.uk/rooms/1046907771076731775?source_impression_id=p3_1704451469_3qliydVyTnmWa7FH&check_in=","line_color":"y"},
+     {"name":"Sky1008","url":"https://www.airbnb.co.uk/rooms/1046907771076731775?source_impression_id=p3_1704451469_3qliydVyTnmWa7FH&check_in=","line_color":"y"},
      ]
 
 #HUNTER
 hunter=[
     {"name":"Charm", "url":"https://www.airbnb.co.uk/rooms/919494818502148128?source_impression_id=p3_1705312955_Qq3gYbrhzJIcQ90A&check_in=","line_color":"r"},
      {"name":"Vintage","url":"https://www.airbnb.co.uk/rooms/901306741280213973?source_impression_id=p3_1705312818_1cWKDpsOurb3ssZD&check_in=","line_color":"g"},
-     {"name":"Hunter","url":"https://www.airbnb.co.uk/rooms/903131518446432064?source_impression_id=p3_1705311821_p9worQnaTtWB52AA&check_in=","line_color":"b"},
-     {"name":"Ours","url":"https://www.airbnb.co.uk/rooms/991919969842748351?source_impression_id=p3_1705313120_c%2Fm2yGmapv9ksHVg&check_in=","line_color":"y"}
+     {"name":"Oneil","url":"https://www.airbnb.co.uk/rooms/903131518446432064?source_impression_id=p3_1705311821_p9worQnaTtWB52AA&check_in=","line_color":"b"},
+     {"name":"Hunter8","url":"https://www.airbnb.co.uk/rooms/991919969842748351?source_impression_id=p3_1705313120_c%2Fm2yGmapv9ksHVg&check_in=","line_color":"y"}
      ]
 
 prince=[
-    {"name":"Richard", "url":"https://www.airbnb.co.uk/rooms/1089937683235156136?source_impression_id=p3_1711897692_9Muqcs%2FJe2CUBC%2Bp&check_in=","line_color":"r"},
      {"name":"James","url":"https://www.airbnb.co.uk/rooms/839049066394923811?source_impression_id=p3_1712155883_JxD%2FYJ282oelANG8&check_in=","line_color":"g"},
      {"name":"John","url":"https://www.airbnb.co.uk/rooms/1035252707118091218?source_impression_id=p3_1711898457_i1f8UFewhDAgVuDS&check_in=","line_color":"b"},
      {"name":"Anna","url":"https://www.airbnb.co.uk/rooms/41347455?source_impression_id=p3_1711898456_X8V6jGQbb5Mv9n4g&check_in=", "line_color": "orange"},
@@ -54,7 +53,10 @@ def getBnb(datalist):
     nights = timedelta(days=min_nights)
     arrFileName=arrivalDate.strftime("%m-%d-%Y")
     departureDate = arrivalDate+nights
+    graphDays = timedelta(days=int(num_days))
+    graphDepartureDate = arrivalDate+graphDays
     departureDate = departureDate.strftime("%Y-%m-%d")
+    graphDepartureDate = graphDepartureDate.strftime("%m-%d-%Y")
     arrivalDate = arrivalDate.strftime("%Y-%m-%d")
 
     options = Options()
@@ -68,17 +70,19 @@ def getBnb(datalist):
     plt.legend()
     plt.xlabel("DATE",fontweight="bold")
     plt.ylabel("RATE/NIGHT",fontweight="bold")
-    plt.title(f"Rate Comparison {graph_name} From {arrFileName}",fontweight="bold")
+    plt.title(f"Rate Comparison {graph_name} From {arrFileName} until {graphDepartureDate}",fontweight="bold")
     plt.ylim(150,650)
     plt.xticks(rotation=45)  
     myFmt = mdates.DateFormatter('%m / %d')
     plt.gca().xaxis.set_major_formatter(myFmt)
     file_time= datetime.now().strftime("%H-%M-%S")
-    plt.savefig(f"graph/{graph_name} {arrFileName} {file_time}.png")
+    today_date = datetime.now().strftime("%m-%d-%Y")
+    plt.savefig(f"graph/{graph_name} {arrFileName} updated {today_date} {file_time}.png")
+    print("DONE")
     plt.show()
 
 
-choice = input("Enter 'sky' for Sky Garden or 'hunt' for Hunter House or 'prince' : ")
+choice = input("Enter 'sky' for Sky Garden or 'hunter' for Hunter House or 'prince' : ")
 getBnb(choice)
 
 

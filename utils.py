@@ -13,14 +13,14 @@ import matplotlib.pyplot as plt
 def addOneDay(element, min_nights):
     arrivalDate = datetime.strptime(element,"%Y-%m-%d")
     arrivalDate += timedelta(days=1)
-    nights = timedelta(days=min_nights)
+    nights = timedelta(days=int(min_nights))
     departureDate = arrivalDate+nights
     departureDate = departureDate.strftime("%Y-%m-%d")
     arrivalDate = arrivalDate.strftime("%Y-%m-%d")
     return {"arrivalDate":arrivalDate, "departureDate":departureDate}
 
 def getRates(listProperty,arrivalDate,departureDate, min_nights, num_days, driver):
-    
+    min_nights = int(min_nights)
     for index in range(len(listProperty)):
         for key in listProperty[index]:
             property_name=listProperty[index]["name"]
@@ -90,6 +90,7 @@ def getRates(listProperty,arrivalDate,departureDate, min_nights, num_days, drive
                         result = addOneDay(arrivalDate, min_nights)
                         arrivalDate = result["arrivalDate"]
                         departureDate = result["departureDate"]
+                       
                 arrivalDate = initArrDate
                 departureDate = initDepDate
                 print(property_name,skyline_x, skyline_y)
