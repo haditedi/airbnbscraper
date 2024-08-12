@@ -38,6 +38,11 @@ sky = [
 
 hunter = [
     {
+        "name": "Richard",
+        "url": "https://www.airbnb.co.uk/rooms/1118081848510283936?source_impression_id=p3_1723438029_P3HPxTrTbOO1mcZ_&check_in=",
+        "line_color": "red",
+    },
+    {
         "name": "Harry",
         "url": "https://www.airbnb.co.uk/rooms/901306741280213973?source_impression_id=p3_1705312818_1cWKDpsOurb3ssZD&check_in=",
         "line_color": "g",
@@ -47,7 +52,11 @@ hunter = [
         "url": "https://www.airbnb.co.uk/rooms/903131518446432064?source_impression_id=p3_1705311821_p9worQnaTtWB52AA&check_in=",
         "line_color": "b",
     },
-    #  {"name":"Hunter8","url":"https://www.airbnb.co.uk/rooms/991919969842748351?source_impression_id=p3_1705313120_c%2Fm2yGmapv9ksHVg&check_in=","line_color":"y"},
+    {
+        "name": "Hunter8",
+        "url": "https://www.airbnb.co.uk/rooms/991919969842748351?source_impression_id=p3_1705313120_c%2Fm2yGmapv9ksHVg&check_in=",
+        "line_color": "yellow",
+    },
     {
         "name": "Dilen",
         "url": "https://www.airbnb.co.uk/rooms/612203853376860930?source_impression_id=p3_1715678296_x0bfS%2BYfuLm40ZcW&check_in=",
@@ -57,6 +66,16 @@ hunter = [
         "name": "CStays",
         "url": "https://www.airbnb.co.uk/rooms/1123044516463216828?source_impression_id=p3_1715678482_2p1XGU5JyleogkTO&check_in=",
         "line_color": "purple",
+    },
+    {
+        "name": "Farah",
+        "url": "https://www.airbnb.co.uk/rooms/1173760191899622806?source_impression_id=p3_1723445897_P3CxiWj7C4I-vUnJ&check_in=",
+        "line_color": "pink",
+    },
+    {
+        "name": "CCR",
+        "url": "https://www.airbnb.co.uk/rooms/1217595244529274432?source_impression_id=p3_1723446760_P3soXyjnmqaTDzAR&check_in=",
+        "line_color": "black",
     },
 ]
 
@@ -86,7 +105,21 @@ prince = [
         "url": "https://www.airbnb.co.uk/rooms/32623773?source_impression_id=p3_1717061367_sgv33kja84bav1HT&check_in=",
         "line_color": "r",
     },
-    #  {"name":"Princes Sq","url":"https://www.airbnb.co.uk/rooms/1110055308129837928?source_impression_id=p3_1711899452_VLF2b6atGPBzhTWn&check_in=","line_color":"y"},
+    {
+        "name": "Princes Sq",
+        "url": "https://www.airbnb.co.uk/rooms/1110055308129837928?source_impression_id=p3_1711899452_VLF2b6atGPBzhTWn&check_in=",
+        "line_color": "yellow",
+    },
+    {
+        "name": "C & A",
+        "url": "https://www.airbnb.co.uk/rooms/9659220?source_impression_id=p3_1723455879_P3MJWYLqVXrC3Aj4&check_in=",
+        "line_color": "pink",
+    },
+    {
+        "name": "Matea",
+        "url": "https://www.airbnb.co.uk/rooms/830468490121625963?source_impression_id=p3_1723456390_P3QplIh3nwUeDWz8&check_in=",
+        "line_color": "black",
+    },
 ]
 
 bowden = [
