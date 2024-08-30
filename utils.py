@@ -41,7 +41,7 @@ def getRates(listProperty, arrivalDate, departureDate, min_nights, num_days, dri
 
                     try:
                         new_url = f"{url}{arrivalDate}&guests=4&adults=4&check_out={departureDate}"
-                        print("NEWURL", new_url)
+
                         driver.get(new_url)
                         # print("SKYLINE 2 BED 2 BATH")
                         # print("URL", url)
