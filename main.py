@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
 from competitorlist import sky, hunter, prince, bowden
+from checkpagevalid import check_valid
 
 
 def getBnb(datalist):
@@ -19,6 +20,7 @@ def getBnb(datalist):
         datalist = bowden
     else:
         datalist = hunter
+    check_valid(datalist)
     # datalist = sky
     # print("DATALIST", datalist)
     arrivalDate = input("date (dd-mm-yyyy) : ")

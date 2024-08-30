@@ -31,6 +31,3 @@ def check_valid(args):
             print("EXCEPTIONM", e)
 
     driver.quit()
-
-
-check_valid(sky)
