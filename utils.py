@@ -43,18 +43,7 @@ def getRates(listProperty, arrivalDate, departureDate, min_nights, num_days, dri
                         new_url = f"{url}{arrivalDate}&guests=4&adults=4&check_out={departureDate}"
 
                         driver.get(new_url)
-                        # print("SKYLINE 2 BED 2 BATH")
-                        # print("URL", url)
-                        sleep(7)
-                        # try:
-                        #     element = WebDriverWait(driver, 10).until(
-                        #         EC.element_to_be_clickable((By.XPATH, "/html/body/div[9]/div/section/div/div/div[2]/div/div[1]/button"))
-                        #     )
-                        #     element.click()
-                        #     sleep(3)
-                        # except:
-                        #     print("EXCEPTIOON IN CLICKABLE")
-                        #     pass
+
                         try:
                             total_price = WebDriverWait(driver, 10).until(
                                 EC.presence_of_element_located(
