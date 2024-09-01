@@ -1,35 +1,35 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from datetime import datetime, timedelta
-from utils import getRates
+from datetime import datetime, timedelta, date
+from utils import getRates, locationName
 import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
 
-from competitorlist import sky, hunter, prince, bowden
+from competitorlist import sky, hunter, prince
 from checkpagevalid import check_valid
 
 
 def getBnb(datalist):
-    graph_name = datalist.capitalize()
+    graph_name = locationName(datalist)
+    print(graph_name)
     if datalist == "sky":
         datalist = sky
     elif datalist == "prince":
         datalist = prince
-    elif datalist == "bowden":
-        datalist = bowden
     else:
         datalist = hunter
-    check_valid(datalist)
-    # datalist = sky
-    # print("DATALIST", datalist)
-    arrivalDate = input("date (dd-mm-yyyy) : ")
+
+    # arrivalDate = input("date (dd-mm-yyyy) : ")
     # arrivalDate = "12-05-2024"
-    num_days = input("Number of days : ")
-    # num_days = 4
-    min_nights = int(input("Minimum nigths : "))
-    # min_nights = 4
-    arrivalDate = datetime.strptime(arrivalDate, "%d-%m-%Y")
+    # num_days = input("Number of days : ")
+    num_days = 28
+    # min_nights = int(input("Minimum nigths : "))
+    min_nights = 4
+    check_valid(datalist)
+    desiredDate = date.today()
+    addday = timedelta(days=1)
+    arrivalDate = desiredDate + addday
+    # arrivalDate = datetime.strptime(arrivalDate, "%d-%m-%Y")
     nights = timedelta(days=min_nights)
     arrFileName = arrivalDate.strftime("%d-%m-%Y")
     departureDate = arrivalDate + nights
@@ -44,28 +44,20 @@ def getBnb(datalist):
     options.add_argument("--headless=new")
     driver = webdriver.Chrome(options=options)
 
-    getRates(datalist, arrivalDate, departureDate, min_nights, num_days, driver)
-
-    plt.rcParams["figure.figsize"] = [12, 7]
-    plt.legend()
-    plt.xlabel("DATE", fontweight="bold")
-    plt.ylabel("RATE/NIGHT", fontweight="bold")
-    plt.title(
-        f"Rate Comparison {graph_name} From {arrFileName} until {graphDepartureDate}",
-        fontweight="bold",
+    getRates(
+        datalist,
+        arrivalDate,
+        departureDate,
+        min_nights,
+        num_days,
+        driver,
+        graph_name,
+        arrFileName,
+        graphDepartureDate,
     )
-    plt.ylim(150, 650)
-    plt.xticks(rotation=45)
-    myFmt = mdates.DateFormatter("%d / %m")
-    plt.gca().xaxis.set_major_formatter(myFmt)
-    file_time = datetime.now().strftime("%H-%M-%S")
-    today_date = datetime.now().strftime("%d-%m-%Y")
-    plt.savefig(
-        f"graph/{graph_name} {arrFileName} updated {today_date} {file_time}.png"
-    )
-    print("DONE")
-    plt.show()
 
 
-choice = input("Enter 'sky' for Sky Garden or 'hunter' for Hunter House or 'prince' : ")
-getBnb(choice)
+# choice = input("Enter 'sky' for Sky Garden or 'hunter' for Hunter House or 'prince' : ")
+mylist = ["sky", "hunter", "prince"]
+for x in mylist:
+    getBnb(x)

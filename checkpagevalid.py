@@ -4,8 +4,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-from competitorlist import sky, hunter, prince, bowden
-
 
 def check_valid(args):
     options = Options()
@@ -13,6 +11,8 @@ def check_valid(args):
     options.add_argument("--headless=new")
     driver = webdriver.Chrome(options=options)
     # driver = webdriver.Chrome()
+
+    print("Checking if properties are still active ,,,")
 
     for x in args:
         # ini_url="https://www.airbnb.co.uk/rooms/736788404696913896?source_impression_id=p3_1723431436_P3sSYsoqENOVl5H5"
