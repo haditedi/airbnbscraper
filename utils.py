@@ -31,6 +31,25 @@ def locationName(graph):
         return "Queensway"
 
 
+def writeToCsv(skyline_x, skyline_y, property_name, date, time):
+    fields = ["Date", "Rate/night"]
+    merged_list = []
+    for i in range(len(skyline_x)):
+        thelist = []
+        thelist.append(skyline_x[i])
+        thelist.append(skyline_y[i])
+        merged_list.append(thelist)
+    filename = f"csv/{property_name} {date} {time}.csv"
+    # writing to csv file
+    with open(filename, "w") as csvfile:
+        # creating a csv writer object
+        csvwriter = csv.writer(csvfile)
+        # writing the fields
+        csvwriter.writerow(fields)
+        # writing the data rows
+        csvwriter.writerows(merged_list)
+
+
 def getRates(
     listProperty,
     arrivalDate,
@@ -43,6 +62,9 @@ def getRates(
     graphDepartureDate,
 ):
     min_nights = int(min_nights)
+    file_time = datetime.now().strftime("%H-%M-%S")
+    today_date = datetime.now().strftime("%d-%m-%Y")
+
     for index in range(len(listProperty)):
         for key in listProperty[index]:
             property_name = listProperty[index]["name"]
@@ -89,14 +111,14 @@ def getRates(
                             skyline_y.append(price_per_night)
 
                         except Exception as e:
-                            print("EXCEPTION - possibly No rate")
+                            # print("EXCEPTION - possibly No rate")
                             skyline_y.append(None)
 
                         # total_price = driver.find_element(By.XPATH, "/html/body/div[5]/div/div/div[1]/div/div[2]/div/div/div/div[1]/main/div/div[1]/div[3]/div/div[2]/div/div/div[1]/div/div/div/div/div/div/div/div[3]/div/section/div[2]/div/span[2]/span[1]/span")
                         # print("TOTAL PRICE", total_price.text)
 
                     except Exception as e:
-                        print("EXCEPTION possible URL error", e)
+                        # print("EXCEPTION possible URL error", e)
                         skyline_y.append(None)
                     finally:
                         # print("Arrival", arrivalDate)
@@ -123,8 +145,7 @@ def getRates(
                     marker="o",
                     label=property_name,
                 )
-                skyline_x = []
-                skyline_y = []
+                writeToCsv(skyline_x, skyline_y, property_name, today_date, file_time)
 
     plt.rcParams["figure.figsize"] = [12, 7]
     plt.legend()
@@ -138,31 +159,12 @@ def getRates(
     plt.xticks(rotation=45)
     myFmt = mdates.DateFormatter("%d / %m")
     plt.gca().xaxis.set_major_formatter(myFmt)
-    file_time = datetime.now().strftime("%H-%M-%S")
-    today_date = datetime.now().strftime("%d-%m-%Y")
+
     plt.savefig(
-        f"graph/{graph_name} {arrFileName} updated {today_date} {file_time}.png"
+        f"graph/{graph_name} {arrFileName} updated {today_date} {file_time}.svg"
     )
     print("DONE")
     plt.close()
     # plt.show()
     driver.quit()
     return
-
-    # WRITE TO CSV
-    # fields = ["Date", "Rate/night"]
-    # merged_list=[]
-    # for i in range(len(skyline_x)):
-    #     thelist=[]
-    #     thelist.append(skyline_x[i])
-    #     thelist.append(skyline_y[i])
-    #     merged_list.append(thelist)
-    # filename = f"csv/{property_name}.csv"
-    # # writing to csv file
-    # with open(filename, 'w') as csvfile:
-    #     # creating a csv writer object
-    #     csvwriter = csv.writer(csvfile)
-    #     # writing the fields
-    #     csvwriter.writerow(fields)
-    #     # writing the data rows
-    #     csvwriter.writerows(merged_list)

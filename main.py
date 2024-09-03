@@ -5,7 +5,8 @@ from datetime import datetime, timedelta, date
 from utils import getRates, locationName
 import matplotlib.pyplot as plt
 
-from competitorlist import sky, hunter, prince
+# from competitorlist import sky, hunter, prince
+from internallist import sky, hunter, prince
 from checkpagevalid import check_valid
 
 
@@ -20,16 +21,16 @@ def getBnb(datalist):
         datalist = hunter
 
     # arrivalDate = input("date (dd-mm-yyyy) : ")
-    # arrivalDate = "12-05-2024"
     # num_days = input("Number of days : ")
     num_days = 28
     # min_nights = int(input("Minimum nigths : "))
     min_nights = 4
     check_valid(datalist)
     desiredDate = date.today()
-    addday = timedelta(days=1)
+    addday = timedelta(days=28)
     arrivalDate = desiredDate + addday
-    # arrivalDate = datetime.strptime(arrivalDate, "%d-%m-%Y")
+    # arrivalDate = "01-09-2024"
+    arrivalDate = datetime.strptime(arrivalDate, "%d-%m-%Y")
     nights = timedelta(days=min_nights)
     arrFileName = arrivalDate.strftime("%d-%m-%Y")
     departureDate = arrivalDate + nights
